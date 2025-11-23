@@ -594,6 +594,20 @@ button:active {
   animation: shake 0.5s;
 }
 
+/* --- Footer Styling --- */
+.app-footer {
+    text-align: center;
+    padding: 10px;
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: var(--text-muted); /* Use the muted text color for subtlety */
+}
+
+.app-footer p {
+    /* You can style the name specifically here if needed */
+    color: var(--primary-light); 
+}
+
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   25% { transform: translateX(-10px); }
