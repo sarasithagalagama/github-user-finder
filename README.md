@@ -61,6 +61,5 @@ The GitHub API limits unauthenticated requests. To make the search reliable for 
 
 ---
 
-## 📄 License
+<img width="911" height="1412" alt="screencapture-127-0-0-1-5500-index-html-2025-11-23-23_32_09" src="https://github.com/user-attachments/assets/f9e1b5c7-6d86-4fed-a09a-6575b0514c94" />
 
-This project is open source and available under the **MIT License**.
