@@ -23,8 +23,7 @@ const searchContainer = document.querySelector(".search-container");
 
 let suggestionList = null;
 
-// --- 1. අවශ්‍ය යාවත්කාලීන කිරීම: AUTHENTICATION HEADERS එකතු කිරීම ---
-// 🚨 IMPORTANT: Replace the placeholder below with your actual, secure Personal Access Token.
+// IMPORTANT: Replace the placeholder below with your actual, secure Personal Access Token.
 const PAT = "";
 
 const authHeaders = {
