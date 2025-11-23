@@ -23,6 +23,15 @@ const searchContainer = document.querySelector(".search-container");
 
 let suggestionList = null;
 
+// --- 1. අවශ්‍ය යාවත්කාලීන කිරීම: AUTHENTICATION HEADERS එකතු කිරීම ---
+// 🚨 IMPORTANT: Replace the placeholder below with your actual, secure Personal Access Token.
+const PAT = "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";
+
+const authHeaders = {
+  Authorization: `token ${PAT}`,
+};
+// ----------------------------------------------------------------------
+
 searchBtn.addEventListener("click", searchUser);
 searchInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") searchUser();
@@ -37,9 +46,8 @@ async function searchUser() {
   profileContainer.classList.add("hidden");
   errorContainer.classList.add("hidden");
 
-  let userData = null;
+  let userData = null; // Helper function to check response status and throw if not OK
 
-  // Helper function to check response status and throw if not OK
   function checkResponseStatus(response) {
     if (!response.ok) {
       // Throw a specific error based on the status code for better debugging
@@ -52,53 +60,53 @@ async function searchUser() {
       }
     }
     return response;
-  }
+  } // --- STEP 1: Try direct username fetch (most efficient) ---
 
-  // --- STEP 1: Try direct username fetch (most efficient) ---
   try {
-    const userResponse = await fetch(`https://api.github.com/users/${query}`);
+    // --- 2A: Headers added ---
+    const userResponse = await fetch(`https://api.github.com/users/${query}`, {
+      headers: authHeaders,
+    }); // Check status before proceeding
 
-    // Check status before proceeding
     checkResponseStatus(userResponse);
 
     userData = await userResponse.json();
   } catch (error) {
     console.error("Step 1 failed:", error.message);
-    // If it's a "Rate limit exceeded" error, we will still show the generic error
-    // but the console log helps you debug. We intentionally let it fall to Step 2
-    // in case the initial search failed for a different reason.
-  }
+  } // --- STEP 2: If direct fetch failed, try search by name/login ---
 
-  // --- STEP 2: If direct fetch failed, try search by name/login ---
   if (!userData) {
     try {
+      // --- 2B: Headers added ---
       const searchResponse = await fetch(
-        `https://api.github.com/search/users?q=${query}+in:login,name&per_page=1`
-      );
+        `https://api.github.com/search/users?q=${query}+in:login,name&per_page=1`,
+        {
+          headers: authHeaders,
+        }
+      ); // Check status before proceeding
 
-      // Check status before proceeding
       checkResponseStatus(searchResponse);
 
       const searchData = await searchResponse.json();
 
       if (searchData.total_count > 0) {
-        const firstUserLogin = searchData.items[0].login;
+        const firstUserLogin = searchData.items[0].login; // --- 2C: Headers added ---
         const finalResponse = await fetch(
-          `https://api.github.com/users/${firstUserLogin}`
-        );
+          `https://api.github.com/users/${firstUserLogin}`,
+          {
+            headers: authHeaders,
+          }
+        ); // Check status before proceeding
 
-        // Check status before proceeding
         checkResponseStatus(finalResponse);
 
         userData = await finalResponse.json();
       }
     } catch (error) {
       console.error("Step 2 failed:", error.message);
-      // If any fetch in step 2 failed (404, 403, or Network), userData remains null
     }
-  }
+  } // --- STEP 3: Display results or error ---
 
-  // --- STEP 3: Display results or error ---
   if (userData) {
     console.log("User data found:", userData);
     displayUserData(userData);
@@ -138,33 +146,33 @@ function displayRepos(repos) {
     const updatedAt = formatDate(repo.updated_at);
 
     repoCard.innerHTML = `
-      <a href="${repo.html_url}" target="_blank" class="repo-name">
-        <i class="fas fa-code-branch"></i> ${repo.name}
-      </a>
-      <p class="repo-description">${
-      repo.description || "No description available"
-    }</p>
-      <div class="repo-meta">
-        ${
-      repo.language
-        ? `
-          <div class="repo-meta-item">
-            <i class="fas fa-circle"></i> ${repo.language}
-          </div>
-        `
-        : ""
-    }
-        <div class="repo-meta-item">
-          <i class="fas fa-star"></i> ${repo.stargazers_count}
-        </div>
-        <div class="repo-meta-item">
-          <i class="fas fa-code-fork"></i> ${repo.forks_count}
-        </div>
-        <div class="repo-meta-item">
-          <i class="fas fa-history"></i> ${updatedAt}
-        </div>
-      </div>
-    `;
+      <a href="${repo.html_url}" target="_blank" class="repo-name">
+        <i class="fas fa-code-branch"></i> ${repo.name}
+      </a>
+      <p class="repo-description">${
+        repo.description || "No description available"
+      }</p>
+      <div class="repo-meta">
+        ${
+          repo.language
+            ? `
+          <div class="repo-meta-item">
+            <i class="fas fa-circle"></i> ${repo.language}
+          </div>
+        `
+            : ""
+        }
+        <div class="repo-meta-item">
+          <i class="fas fa-star"></i> ${repo.stargazers_count}
+        </div>
+        <div class="repo-meta-item">
+          <i class="fas fa-code-fork"></i> ${repo.forks_count}
+        </div>
+        <div class="repo-meta-item">
+          <i class="fas fa-history"></i> ${updatedAt}
+        </div>
+      </div>
+    `;
 
     reposContainer.appendChild(repoCard);
   });
@@ -251,7 +259,10 @@ async function fetchSuggestions(query) {
   const apiUrl = `https://api.github.com/search/users?q=${query}+in:login,name&per_page=5&sort=followers`;
 
   try {
-    const response = await fetch(apiUrl);
+    // --- 4: Headers added ---
+    const response = await fetch(apiUrl, {
+      headers: authHeaders,
+    });
     if (!response.ok) throw new Error("Search failed");
 
     const data = await response.json(); // The items in the data array will now include users whose names match the query.
