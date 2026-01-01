@@ -3,8 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Github User Finder</title>
+    <title>GitHype | Modern Profile Finder</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -14,92 +21,327 @@
     />
   </head>
   <body>
-    <div class="container">
-      <header>
-        <h1><i class="fab fa-github"></i> GitHub User Finder</h1>
-        <p>Search for any GitHub user to see their profile and repositories</p>
+    <div class="bg-glow"></div>
+    <div class="app-layout">
+      <!-- Header Section -->
+      <header class="app-header">
+        <div class="logo">
+          <i class="fab fa-github"></i>
+          <span>GitHype</span>
+        </div>
+        <p class="subtitle">Discover amazing developers and their work.</p>
       </header>
 
-      <div class="search-container">
-        <input
-          type="text"
-          id="search"
-          placeholder="Enter a GitHub username..."
-          autocomplete="off"
-        />
-        <button id="search-btn">Search</button>
-      </div>
+      <!-- Navigation -->
+      <nav class="app-nav">
+        <button class="nav-btn active" data-view="search">
+          <i class="fas fa-search"></i> Search
+        </button>
+        <button class="nav-btn" data-view="classroom">
+          <i class="fas fa-graduation-cap"></i> Classroom
+        </button>
+      </nav>
 
-      <div id="profile-container" class="hidden">
-        <div class="profile-header">
-          <img src="" alt="Profile avatar" id="avatar" />
-          <div class="profile-info">
-            <h2 id="name"></h2>
-            <p id="username"></p>
-            <p id="bio"></p>
-            <div class="location-date">
-              <p>
-                <i class="fas fa-map-marker-alt"></i>
-                <span id="location">Not specified</span>
-              </p>
-              <p>
-                <i class="far fa-calendar-alt"></i>
-                Joined
-                <span id="joined-date"></span>
-              </p>
+      <!-- View: Search -->
+      <div id="view-search" class="view-section active">
+        <!-- Search Section -->
+        <div class="search-wrapper">
+          <div class="search-box">
+            <i class="fas fa-search search-icon"></i>
+            <input
+              type="text"
+              id="search"
+              placeholder="Search username..."
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <button id="search-btn">Search</button>
+          </div>
+        </div>
+
+        <!-- Welcome State (Default) -->
+        <div id="welcome-container" class="welcome-state">
+          <div class="welcome-content">
+            <div class="welcome-icon">
+              <i class="fab fa-github"></i>
             </div>
-            <a id="profile-link" target="_blank" class="btn"> View Profile </a>
+            <h2>Explore GitHub Profiles</h2>
+            <p>
+              Enter a username to discover repositories, contributions, and
+              detailed stats.
+            </p>
+            <div class="feature-pills">
+              <span class="pill"
+                ><i class="fas fa-user-circle"></i> Profile Data</span
+              >
+              <span class="pill"
+                ><i class="fas fa-code-branch"></i> Latest Repos</span
+              >
+              <span class="pill"
+                ><i class="fas fa-users"></i> Social Stats</span
+              >
+            </div>
           </div>
         </div>
 
-        <div class="stats">
-          <div class="stat">
-            <i class="fas fa-users"></i>
-            <span id="followers"></span> followers
+        <!-- Main Profile Content (Bento Grid) -->
+        <main id="profile-container" class="bento-grid hidden">
+          <!-- Identity Card -->
+          <div class="card identity-card">
+            <div class="profile-image-wrapper">
+              <img src="" alt="Avatar" id="avatar" />
+            </div>
+            <div class="profile-meta">
+              <h1 id="name"></h1>
+              <a id="profile-link" target="_blank" class="username-handle">
+                <span id="username"></span>
+                <i class="fas fa-external-link-alt"></i>
+              </a>
+              <p id="bio" class="bio-text"></p>
+              <div class="joined-badge">
+                <i class="far fa-calendar-alt"></i> Joined
+                <span id="joined-date"></span>
+              </div>
+            </div>
           </div>
 
-          <div class="stat">
-            <i class="fas fa-user-friends"></i>
-            <span id="following"></span> following
+          <!-- Stats Card -->
+          <div class="card stats-card">
+            <div class="stat-item">
+              <div class="stat-icon"><i class="fas fa-users"></i></div>
+              <div class="stat-value" id="followers"></div>
+              <div class="stat-label">Followers</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-icon"><i class="fas fa-user-friends"></i></div>
+              <div class="stat-value" id="following"></div>
+              <div class="stat-label">Following</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-icon"><i class="fas fa-code"></i></div>
+              <div class="stat-value" id="repos"></div>
+              <div class="stat-label">Repos</div>
+            </div>
           </div>
-          <div class="stat">
-            <i class="fas fa-code-branch"></i>
-            <span id="repos"></span> repositories
-          </div>
-        </div>
 
-        <div class="additional-info">
-          <div class="info-item" id="company-container">
-            <i class="fas fa-building"></i>
-            <span id="company">Not specified</span>
+          <!-- Info Card -->
+          <div class="card info-card">
+            <h3>Details</h3>
+            <div class="info-list">
+              <div class="info-row">
+                <i class="fas fa-map-marker-alt"></i>
+                <span id="location"></span>
+              </div>
+              <div class="info-row" id="company-container">
+                <i class="fas fa-building"></i>
+                <span id="company"></span>
+              </div>
+              <div class="info-row" id="blog-container">
+                <i class="fas fa-link"></i>
+                <a id="blog" target="_blank" class="truncate"></a>
+              </div>
+              <div class="info-row" id="twitter-container">
+                <i class="fab fa-twitter"></i>
+                <a id="twitter" target="_blank"></a>
+              </div>
+            </div>
           </div>
-          <div class="info-item" id="blog-container">
-            <i class="fas fa-link"></i>
-            <a id="blog" target="_blank">No website</a>
-          </div>
-          <div class="info-item" id="twitter-container">
-            <i class="fab fa-twitter"></i>
-            <a id="twitter" target="_blank">No Twitter</a>
-          </div>
-        </div>
 
-        <div class="repos-section">
-          <h3>Latest Repositories</h3>
-          <div id="repos-container" class="repos-container">
-            <!-- Repositories will be inserted here dynamically -->
-
-            <div class="loading-repos">Loading repositories...</div>
+          <!-- Repositories Card -->
+          <div class="card repos-card-wrapper">
+            <div class="repos-header">
+              <h3>Latest Repositories</h3>
+              <div class="repos-badge">Top 6</div>
+            </div>
+            <div id="repos-container" class="repos-grid">
+              <!-- Repos injected here -->
+            </div>
           </div>
-        </div>
+        </main>
       </div>
 
-      <div id="error-container" class="hidden">
-        <p>No user found. Please try another username.</p>
+      <!-- View: Classroom -->
+      <div id="view-classroom" class="view-section hidden">
+        <div class="classroom-header">
+          <h2><i class="fas fa-book-reader"></i> Community Classroom</h2>
+          <p>
+            Hand-picked open source learning paths & trending educational
+            resources.
+          </p>
+        </div>
+
+        <section class="curated-section">
+          <h3>Curated Collections</h3>
+          <div class="collection-grid">
+            <!-- Web Development -->
+            <div class="collection-card">
+              <div class="collection-icon web">
+                <i class="fas fa-laptop-code"></i>
+              </div>
+              <h4>Web Development</h4>
+              <p>Master modern web stacks with these roadmaps.</p>
+              <div class="repo-links">
+                <a
+                  href="https://github.com/freeCodeCamp/freeCodeCamp"
+                  target="_blank"
+                  >freeCodeCamp</a
+                >
+                <a
+                  href="https://github.com/kamranahmedse/developer-roadmap"
+                  target="_blank"
+                  >Developer Roadmap</a
+                >
+                <a
+                  href="https://github.com/30-seconds/30-seconds-of-code"
+                  target="_blank"
+                  >30 Seconds of Code</a
+                >
+              </div>
+            </div>
+
+            <!-- Interview Prep -->
+            <div class="collection-card">
+              <div class="collection-icon interview">
+                <i class="fas fa-user-tie"></i>
+              </div>
+              <h4>Interview Prep</h4>
+              <p>Ace your next technical interview.</p>
+              <div class="repo-links">
+                <a
+                  href="https://github.com/jwasham/coding-interview-university"
+                  target="_blank"
+                  >Coding Interview Univ</a
+                >
+                <a
+                  href="https://github.com/yangshun/tech-interview-handbook"
+                  target="_blank"
+                  >Tech Interview Handbook</a
+                >
+              </div>
+            </div>
+
+            <!-- CS & Algorithms -->
+            <div class="collection-card">
+              <div class="collection-icon cs"><i class="fas fa-brain"></i></div>
+              <h4>CS & Algorithms</h4>
+              <p>Deep dive into data structures and logic.</p>
+              <div class="repo-links">
+                <a
+                  href="https://github.com/trekhleb/javascript-algorithms"
+                  target="_blank"
+                  >JS Algorithms</a
+                >
+                <a
+                  href="https://github.com/TheAlgorithms/Python"
+                  target="_blank"
+                  >Python Algorithms</a
+                >
+              </div>
+            </div>
+
+            <!-- Beginner's Hub (New) -->
+            <div class="collection-card">
+              <div class="collection-icon beginner">
+                <i class="fas fa-seedling"></i>
+              </div>
+              <h4>Beginner's Hub</h4>
+              <p>Start your open source journey here.</p>
+              <div class="repo-links">
+                <a
+                  href="https://github.com/firstcontributions/first-contributions"
+                  target="_blank"
+                  >First Contributions</a
+                >
+                <a
+                  href="https://github.com/MunGell/awesome-for-beginners"
+                  target="_blank"
+                  >Awesome for Beginners</a
+                >
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Topic Explorer (New) -->
+        <section class="topic-section">
+          <h3>Explore by Topic</h3>
+          <div class="topic-chips">
+            <button class="topic-btn active" data-topic="education">All</button>
+            <button class="topic-btn" data-topic="machine-learning">
+              Machine Learning
+            </button>
+            <button class="topic-btn" data-topic="web-development">
+              Web Dev
+            </button>
+            <button class="topic-btn" data-topic="devops">DevOps</button>
+            <button class="topic-btn" data-topic="system-design">
+              System Design
+            </button>
+            <button class="topic-btn" data-topic="javascript">
+              JavaScript
+            </button>
+            <button class="topic-btn" data-topic="python">Python</button>
+          </div>
+        </section>
+
+        <section class="trending-section">
+          <div class="repos-header">
+            <h3 id="trending-title">Trending in Education</h3>
+            <div class="repos-badge"><i class="fas fa-fire"></i> Live</div>
+          </div>
+          <div id="classroom-feed" class="repos-grid">
+            <div class="loading-repos">Fetching trending resources...</div>
+          </div>
+        </section>
       </div>
-      <footer class="app-footer">
-        <p>Developed by: Sarasitha Galagama</p>
-      </footer>
+
+      <!-- Error State -->
+      <div id="error-container" class="error-state hidden">
+        <div class="error-icon"><i class="fas fa-search-minus"></i></div>
+        <h2>User not found</h2>
+        <p>We couldn't locate that user. Please try a different username.</p>
+      </div>
     </div>
+
+    <footer class="app-footer">
+      <div class="footer-content">
+        <div class="social-links">
+          <a
+            href="https://github.com/sarasithagalagama"
+            target="_blank"
+            title="GitHub"
+          >
+            <i class="fab fa-github"></i>
+          </a>
+          <a
+            href="https://linkedin.com/in/sarasitha-galagama/"
+            target="_blank"
+            title="LinkedIn"
+          >
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a
+            href="https://www.instagram.com/sarasitha_galagama/"
+            target="_blank"
+            title="Instagram"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+        </div>
+        <div class="footer-text">
+          <p>
+            Designed & Developed by
+            <a
+              href="https://sarasitha.me/"
+              target="_blank"
+              class="developer-name"
+              >Sarasitha Galagama</a
+            >
+          </p>
+          <p class="copyright">&copy; 2026 All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
 
     <script src="script.js"></script>
   </body>

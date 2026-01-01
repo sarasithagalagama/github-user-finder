@@ -19,16 +19,18 @@ const companyContainer = document.getElementById("company-container");
 const blogContainer = document.getElementById("blog-container");
 const twitterContainer = document.getElementById("twitter-container");
 const reposContainer = document.getElementById("repos-container");
-const searchContainer = document.querySelector(".search-container");
+const searchContainer = document.querySelector(".search-wrapper");
+const welcomeContainer = document.getElementById("welcome-container");
+const appLayout = document.querySelector(".app-layout");
+const navBtns = document.querySelectorAll(".nav-btn");
+const views = document.querySelectorAll(".view-section");
+const classroomFeed = document.getElementById("classroom-feed");
+const topicBtns = document.querySelectorAll(".topic-btn");
+const trendingTitle = document.getElementById("trending-title");
 
 let suggestionList = null;
 
-// IMPORTANT: Replace the placeholder below with your actual, secure Personal Access Token.
-const PAT = "";
-
-const authHeaders = {
-  Authorization: `token ${PAT}`,
-};
+// Note: We are using the public GitHub API which has a rate limit of 60 requests per hour for unauthenticated requests.
 // ----------------------------------------------------------------------
 
 searchBtn.addEventListener("click", searchUser);
@@ -44,6 +46,8 @@ async function searchUser() {
   clearSuggestions();
   profileContainer.classList.add("hidden");
   errorContainer.classList.add("hidden");
+  welcomeContainer.classList.add("hidden");
+  appLayout.classList.add("search-active");
 
   let userData = null; // Helper function to check response status and throw if not OK
 
@@ -53,7 +57,9 @@ async function searchUser() {
       if (response.status === 404) {
         throw new Error("User not found (404)");
       } else if (response.status === 403) {
-        throw new Error("Rate limit exceeded (403)");
+        throw new Error(
+          "Rate limit exceeded. Please wait a while before searching again."
+        );
       } else {
         throw new Error(`Request failed with status: ${response.status}`);
       }
@@ -63,9 +69,7 @@ async function searchUser() {
 
   try {
     // --- 2A: Headers added ---
-    const userResponse = await fetch(`https://api.github.com/users/${query}`, {
-      headers: authHeaders,
-    }); // Check status before proceeding
+    const userResponse = await fetch(`https://api.github.com/users/${query}`); // Check status before proceeding
 
     checkResponseStatus(userResponse);
 
@@ -78,10 +82,7 @@ async function searchUser() {
     try {
       // --- 2B: Headers added ---
       const searchResponse = await fetch(
-        `https://api.github.com/search/users?q=${query}+in:login,name&per_page=1`,
-        {
-          headers: authHeaders,
-        }
+        `https://api.github.com/search/users?q=${query}+in:login,name&per_page=1`
       ); // Check status before proceeding
 
       checkResponseStatus(searchResponse);
@@ -91,10 +92,7 @@ async function searchUser() {
       if (searchData.total_count > 0) {
         const firstUserLogin = searchData.items[0].login; // --- 2C: Headers added ---
         const finalResponse = await fetch(
-          `https://api.github.com/users/${firstUserLogin}`,
-          {
-            headers: authHeaders,
-          }
+          `https://api.github.com/users/${firstUserLogin}`
         ); // Check status before proceeding
 
         checkResponseStatus(finalResponse);
@@ -234,9 +232,6 @@ function formatDate(dateString) {
   });
 }
 
-searchInput.value = "sarasithagalagama";
-searchUser();
-
 // --- DEBOUNCE UTILITY FUNCTION ---
 function debounce(func, delay) {
   let timeout;
@@ -259,9 +254,7 @@ async function fetchSuggestions(query) {
 
   try {
     // --- 4: Headers added ---
-    const response = await fetch(apiUrl, {
-      headers: authHeaders,
-    });
+    const response = await fetch(apiUrl);
     if (!response.ok) throw new Error("Search failed");
 
     const data = await response.json(); // The items in the data array will now include users whose names match the query.
@@ -320,5 +313,127 @@ searchInput.addEventListener("input", () => {
     debouncedFetchSuggestions(query);
   } else {
     clearSuggestions();
+    welcomeContainer.classList.remove("hidden");
+    profileContainer.classList.add("hidden");
+    errorContainer.classList.add("hidden");
+    appLayout.classList.remove("search-active");
   }
 });
+
+// --- NAVIGATION & CLASSROOM LOGIC ---
+
+navBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    // 1. Update Buttons
+    navBtns.forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    // 2. Switch Views
+    const targetViewId = `view-${btn.dataset.view}`;
+    views.forEach((view) => {
+      if (view.id === targetViewId) {
+        view.classList.remove("hidden");
+      } else {
+        view.classList.add("hidden");
+      }
+    });
+
+    // 3. Handle specific view logic
+    // 3. Handle specific view logic
+    if (btn.dataset.view === "classroom") {
+      appLayout.classList.add("search-active"); // Classroom should always be top-aligned
+      // Load trending if empty
+      if (classroomFeed.innerHTML.includes("Fetching")) {
+        fetchTrendingEducation();
+      }
+    } else {
+      // If returning to search, check if we should be in Top-Aligned (Results) or Center (Welcome) mode
+      if (!profileContainer.classList.contains("hidden")) {
+        appLayout.classList.add("search-active");
+      } else {
+        appLayout.classList.remove("search-active");
+      }
+    }
+  });
+});
+
+// --- TOPIC EXPLORER LOGIC ---
+
+topicBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    // Update Active Button
+    topicBtns.forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    // Fetch New Topic
+    const topic = btn.dataset.topic;
+    const displayName = btn.textContent;
+    trendingTitle.innerHTML = `Trending in ${displayName}`;
+    fetchTrendingEducation(topic);
+  });
+});
+
+async function fetchTrendingEducation(topic = "education") {
+  classroomFeed.innerHTML =
+    '<div class="loading-repos">Fetching trending resources...</div>';
+
+  // Search for repositories with specific topic, sorted by stars
+  const apiUrl = `https://api.github.com/search/repositories?q=topic:${topic}+sort:stars&per_page=6`;
+
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) throw new Error("Failed to load trending items");
+    const data = await response.json();
+    displayClassroomRepos(data.items);
+  } catch (error) {
+    classroomFeed.innerHTML = `<div class="no-repos">Could not load trending resources. (${error.message})</div>`;
+  }
+}
+
+function displayClassroomRepos(repos) {
+  if (!repos || repos.length === 0) {
+    classroomFeed.innerHTML =
+      '<div class="no-repos">No trending repos found.</div>';
+    return;
+  }
+
+  classroomFeed.innerHTML = "";
+
+  repos.forEach((repo) => {
+    const repoCard = document.createElement("div");
+    repoCard.className = "repo-card";
+
+    const updatedAt = formatDate(repo.updated_at);
+
+    repoCard.innerHTML = `
+      <a href="${repo.html_url}" target="_blank" class="repo-name">
+        <i class="fas fa-book"></i> ${repo.name}
+      </a>
+      <p class="repo-description">${
+        repo.description || "No description available"
+      }</p>
+      <div class="repo-meta">
+        ${
+          repo.language
+            ? `
+          <div class="repo-meta-item">
+            <i class="fas fa-circle"></i> ${repo.language}
+          </div>
+        `
+            : ""
+        }
+        <div class="repo-meta-item">
+          <i class="fas fa-star"></i> ${repo.stargazers_count}
+        </div>
+        <div class="repo-meta-item">
+          <i class="fas fa-code-fork"></i> ${repo.forks_count}
+        </div>
+        <div class="repo-meta-item">
+          <i class="fas fa-history"></i> ${updatedAt}
+        </div>
+      </div>
+    `;
+
+    classroomFeed.appendChild(repoCard);
+  });
+}
