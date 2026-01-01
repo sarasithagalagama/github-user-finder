@@ -49,7 +49,9 @@ async function searchUser() {
   welcomeContainer.classList.add("hidden");
   appLayout.classList.add("search-active");
 
-  let userData = null; // Helper function to check response status and throw if not OK
+  let userData = null;
+
+  // Helper function to check response status and throw if not OK
 
   function checkResponseStatus(response) {
     if (!response.ok) {
@@ -248,8 +250,9 @@ async function fetchSuggestions(query) {
   if (query.length < 3) {
     clearSuggestions();
     return;
-  } // Use the GitHub Search API. We search the login field primarily, // but the search query also matches the user's name field. // We also sort by the number of followers to get more relevant results.
+  }
 
+  // Search users by login (primary) and name, sorted by followers
   const apiUrl = `https://api.github.com/search/users?q=${query}+in:login,name&per_page=5&sort=followers`;
 
   try {
@@ -338,7 +341,6 @@ navBtns.forEach((btn) => {
       }
     });
 
-    // 3. Handle specific view logic
     // 3. Handle specific view logic
     if (btn.dataset.view === "classroom") {
       appLayout.classList.add("search-active"); // Classroom should always be top-aligned

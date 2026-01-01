@@ -1,65 +1,79 @@
-# 🐙 GitHub User Finder
+# � GitHype | Modern GitHub Explorer & Learning Hub
 
-A responsive web application built using **HTML**, **CSS** (Glassmorphic Dark Theme), and **Vanilla JavaScript** to search for any GitHub user, view their profile details, statistics, and a list of their latest repositories.
+**GitHype** is a premium, beautifully designed web application that transforms how you explore GitHub. Built with a stunning **Neo-Glass Bento** aesthetic, it allows you to search for developers, view detailed profile statistics, and discover the best open-source learning resources—all in one place.
 
----
-
-## 🚀 Features
-
-- **User Search:** Search for GitHub users by username or partial name, with a live suggestion list feature.
-- **Profile Display:** Shows the user's avatar, full name, username, bio, location, and GitHub join date.
-- **Key Statistics:** Displays current **followers**, **following count**, and **public repository** count.
-- **Latest Repositories:** Dynamically fetches and displays the user's six most recent repositories.
-- **Modern Design:** Features a responsive, dark **Glassmorphic** aesthetic.
-- **Rate Limit Fix:** Configured to use a Personal Access Token (PAT) to bypass the default unauthenticated GitHub API rate limit (60 requests/hour).
+![GitHype Preview](https://via.placeholder.com/1200x600/0f172a/38bdf8?text=GitHype+Neo-Glass+UI)
 
 ---
 
-## ⚙️ Setup and Installation
+## ✨ Features
 
-This is a client-side application. Follow these steps to set it up locally and ensure API calls function correctly.
+### 🔍 **Smart Profile Search**
 
-### 1. Project Setup
+- **Instant Discovery:** Search by username with smart debounce autocomplete.
+- **Deep Insights:** View detailed stats including followers, contributions, and top repositories.
+- **Bento Grid Layout:** A responsive, modular interface that organizes data beautifully on any device.
 
-1.  **Clone the Repository:**
+### 🎓 **Community Classroom**
+
+- **Curated Collections:** Hand-picked learning paths for **Web Development**, **Interview Prep**, **Algorithms**, and a dedicated **Beginner's Hub**.
+- **Topic Explorer:** Explore trending repositories live across diverse topics like **Machine Learning**, **DevOps**, **Python**, and **System Design**.
+- **Live Trending Feed:** Stay updated with what's hot in the education community right now.
+
+### 🎨 **Neo-Glass Aesthetic**
+
+- **Modern UI:** Features deep dark modes, vibrant gradients, and real-time glassmorphism effects.
+- **Micro-Interactions:** Smooth animations, hover effects, and fluid transitions.
+- **Fully Responsive:** Optimized for desktops, tablets, and mobile devices.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** HTML5, CSS3 (CSS Variables, Flexbox, Grid)
+- **Scripting:** Vanilla JavaScript (ES6+, Async/Await)
+- **API:** GitHub Public REST API
+- **Styling:** Custom "Neo-Glass" Design System (No Frameworks)
+- **Icons:** Font Awesome 6
+- **Fonts:** 'Outfit' (Headings) & 'Inter' (Body)
+
+---
+
+## 🚀 Getting Started
+
+No API keys or complex setup required! This project uses the public GitHub API.
+
+1.  **Clone the Repository**
+
     ```bash
-    git clone [https://github.com/sarasithagalagama/github-user-finder.git](https://github.com/sarasithagalagama/github-user-finder.git)
+    git clone https://github.com/sarasithagalagama/github-user-finder.git
     cd github-user-finder
     ```
-2.  **Open the Project:** Open the `index.html` file in your web browser to run the application.
 
-### 2. API Configuration (Fixing 403 Errors)
-
-The GitHub API limits unauthenticated requests. To make the search reliable for repeated use, you **must** configure a Personal Access Token (PAT).
-
-1.  **Generate a New PAT:**
-
-    - Go to your GitHub **Settings** $\rightarrow$ **Developer settings** $\rightarrow$ **Personal access tokens (classic)**.
-    - Generate a new token. You **do not** need to select any scopes (permissions).
-    - **Copy the generated token immediately.**
-
-2.  **Edit `script.js`:** Open the `script.js` file and find the `PAT` variable definition near the top.
-
-    ```javascript
-    // In script.js
-    const PAT = "YOUR_NEWLY_GENERATED_PAT_HERE";
-    ```
-
-3.  **Insert the Token:** Replace the placeholder `'YOUR_NEWLY_GENERATED_PAT_HERE'` with your actual, copied token.
-
-**⚠️ Security Note:** **Never commit your actual PAT** to Git history, especially to this public repository. This token must only exist on your local machine.
+2.  **Run the App**
+    Simply open `index.html` in your favorite web browser.
+    _Recommended: Use VS Code's "Live Server" extension for the best experience._
 
 ---
 
-## 💻 Tech Stack
+## ⚠️ API Rate Limits
 
-- **HTML5**
-- **CSS3**
-- **Vanilla JavaScript (ES6+)**
-- **GitHub REST API**
-- **Font Awesome**
+Since this application uses the **public** GitHub API without authentication:
+
+- You are limited to **60 requests per hour**.
+- If you hit the limit, wait a few minutes or try again later.
 
 ---
 
-<img width="911" height="1412" alt="screencapture-127-0-0-1-5500-index-html-2025-11-23-23_32_09" src="https://github.com/user-attachments/assets/f9e1b5c7-6d86-4fed-a09a-6575b0514c94" />
+## 👨‍💻 Author
 
+**Designed & Developed by [Sarasitha Galagama](https://sarasitha.me/)**
+
+[![GitHub](https://img.shields.io/badge/GitHub-Sarasitha_Galagama-white?style=for-the-badge&logo=github&logoColor=black)](https://github.com/sarasithagalagama)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Sarasitha_Galagama-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/sarasitha-galagama/)
+[![Instagram](https://img.shields.io/badge/Instagram-@sarasitha__galagama-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/sarasitha_galagama/)
+[![Portfolio](https://img.shields.io/badge/Portfolio-sarasitha.me-38bdf8?style=for-the-badge&logo=google-earth&logoColor=white)](https://sarasitha.me/)
+
+---
+
+<p align="center">© 2026 GitHype. All rights reserved.</p>
