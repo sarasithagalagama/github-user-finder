@@ -56,8 +56,8 @@ body {
 
 .app-layout {
   width: 100%;
-  max-width: 1200px;
-  padding: 2rem;
+  max-width: 1400px; /* Increased from 1200px for better desktop use */
+  padding: 2rem 2rem 0; /* Removed bottom padding */
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -76,19 +76,19 @@ body {
 /* Header */
 .app-header {
   text-align: center;
-  padding: 2rem 0;
+  padding: 3rem 0 2rem; /* Increased top/bottom padding for Hero feel */
   animation: fadeInDown 0.8s ease-out;
 }
 
 .logo {
   font-family: "Outfit", sans-serif;
-  font-size: 2.5rem;
+  font-size: 3rem; /* Slightly larger logo */
   font-weight: 800;
   background: linear-gradient(135deg, var(--text-main) 0%, var(--primary) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
   display: inline-flex;
   align-items: center;
   gap: 1rem;
@@ -101,13 +101,14 @@ body {
 
 .subtitle {
   color: var(--text-muted);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 /* Search Box */
 .search-wrapper {
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 800px; /* Increased from 600px */
+  margin: 0 auto 3rem; /* Added bottom margin to separate from grid */
   width: 100%;
   position: relative;
   z-index: 10;
@@ -555,7 +556,7 @@ button#search-btn:hover {
 /* Footer */
 .app-footer {
   margin-top: auto;
-  padding: 3rem 1rem;
+  padding: 1.5rem 1rem;
   width: 100%;
   border-top: 1px solid var(--border-color);
   background: linear-gradient(to bottom, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.8) 100%);
@@ -661,8 +662,8 @@ button#search-btn:hover {
 
 .welcome-content {
   /* Removed card background for a cleaner 'Hero' look */
-  padding: 3rem;
-  max-width: 600px;
+  padding: 2rem;
+  max-width: 800px; /* Increased from 600px */
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -713,7 +714,7 @@ button#search-btn:hover {
 .feature-pills {
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 1.5rem; /* Increased gap */
   flex-wrap: wrap;
 }
 
@@ -729,8 +730,8 @@ button#search-btn:hover {
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 .pill i {
@@ -766,16 +767,16 @@ button#search-btn:hover {
 .app-nav {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
+  gap: 1rem; /* More gap */
+  margin-bottom: 2.5rem; /* More bottom margin */
   animation: fadeInDown 0.8s ease-out;
 }
 
 .nav-btn {
-  background: transparent;
-  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.03); /* Subtle bg for inactive state */
+  border: 1px solid var(--border-color);
   color: var(--text-muted);
-  padding: 0.8rem 1.5rem;
+  padding: 0.8rem 1.8rem; /* Wider buttons */
   border-radius: 99px;
   font-family: 'Outfit', sans-serif;
   font-weight: 600;
@@ -789,14 +790,15 @@ button#search-btn:hover {
 
 .nav-btn:hover {
   color: var(--text-main);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .nav-btn.active {
-  background: rgba(56, 189, 248, 0.1);
+  background: rgba(56, 189, 248, 0.15);
   color: var(--primary);
-  border-color: rgba(56, 189, 248, 0.2);
-  box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
+  border-color: var(--primary);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
 }
 
 .nav-btn i {

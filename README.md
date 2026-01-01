@@ -1,79 +1,76 @@
-# � GitHype | Modern GitHub Explorer & Learning Hub
+# GitHype | Modern GitHub Profile Finder
 
-**GitHype** is a premium, beautifully designed web application that transforms how you explore GitHub. Built with a stunning **Neo-Glass Bento** aesthetic, it allows you to search for developers, view detailed profile statistics, and discover the best open-source learning resources—all in one place.
+> **Discover amazing developers and their work.**
 
-![GitHype Preview](https://via.placeholder.com/1200x600/0f172a/38bdf8?text=GitHype+Neo-Glass+UI)
-
----
+GitHype is a modern, aesthetically pleasing GitHub user finder application built with **React** and **Vite**. It features a "Neo-Glass Bento" design system, providing a premium and responsive user experience. It goes beyond simple search by offering a "Community Classroom" to explore trending resources and learning paths.
 
 ## ✨ Features
 
-### 🔍 **Smart Profile Search**
+### 🔍 Smart Search
 
-- **Instant Discovery:** Search by username with smart debounce autocomplete.
-- **Deep Insights:** View detailed stats including followers, contributions, and top repositories.
-- **Bento Grid Layout:** A responsive, modular interface that organizes data beautifully on any device.
+- **Instant User Search**: Quickly find any GitHub user by username.
+- **Smart Suggestions**: Real-time autocomplete suggestions as you type.
+- **Debounced Input**: Optimized API calls for smoother performance.
 
-### 🎓 **Community Classroom**
+### 👤 Detailed Profiles (Bento Grid)
 
-- **Curated Collections:** Hand-picked learning paths for **Web Development**, **Interview Prep**, **Algorithms**, and a dedicated **Beginner's Hub**.
-- **Topic Explorer:** Explore trending repositories live across diverse topics like **Machine Learning**, **DevOps**, **Python**, and **System Design**.
-- **Live Trending Feed:** Stay updated with what's hot in the education community right now.
+- **Identity Card**: User avatar, bio, and join date.
+- **Stats Overview**: Visual breakdown of followers, following, and public repos.
+- **Personal Info**: Location, company, website, and social links.
+- **Latest Repos**: Showcase of the user's most recent repositories.
 
-### 🎨 **Neo-Glass Aesthetic**
+### 🎓 Community Classroom
 
-- **Modern UI:** Features deep dark modes, vibrant gradients, and real-time glassmorphism effects.
-- **Micro-Interactions:** Smooth animations, hover effects, and fluid transitions.
-- **Fully Responsive:** Optimized for desktops, tablets, and mobile devices.
-
----
+- **Curated Collections**: Hand-picked roadmaps for Web Dev, Interviews, CS, and Beginners.
+- **Topic Explorer**: Browse trending repositories by topics (Machine Learning, DevOps, etc.).
+- **Trending Feed**: Live feed of popular repositories in selected categories.
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** HTML5, CSS3 (CSS Variables, Flexbox, Grid)
-- **Scripting:** Vanilla JavaScript (ES6+, Async/Await)
-- **API:** GitHub Public REST API
-- **Styling:** Custom "Neo-Glass" Design System (No Frameworks)
-- **Icons:** Font Awesome 6
-- **Fonts:** 'Outfit' (Headings) & 'Inter' (Body)
-
----
+- **Framework**: React 18
+- **Build Tool**: Vite
+- **Styling**: Vanilla CSS (CSS Variables, Flexbox, Grid, Glassmorphism)
+- **Icons**: Font Awesome 6
+- **Fonts**: 'Outfit' (Headings) & 'Inter' (Body)
+- **API**: GitHub REST API
 
 ## 🚀 Getting Started
 
-No API keys or complex setup required! This project uses the public GitHub API.
-
-1.  **Clone the Repository**
+1.  **Clone the repository**
 
     ```bash
-    git clone https://github.com/sarasithagalagama/github-user-finder.git
-    cd github-user-finder
+    git clone https://github.com/yourusername/githype.git
+    cd githype
     ```
 
-2.  **Run the App**
-    Simply open `index.html` in your favorite web browser.
-    _Recommended: Use VS Code's "Live Server" extension for the best experience._
+2.  **Install dependencies**
+
+    ```bash
+    npm install
+    ```
+
+3.  **Run the development server**
+
+    ```bash
+    npm run dev
+    ```
+
+4.  **Open in browser**
+    Visit `http://localhost:5173` to view the app.
+
+## 🎨 Design System
+
+The application uses a custom **Neo-Glass Bento** theme:
+
+- **Dark Mode Default**: Deep blue/slate background (`#0f172a`).
+- **Glassmorphism**: Translucent cards with background blur.
+- **Bento Grid**: Modular, grid-based layout for profile data.
+- **Vibrant Gradients**: Used for accents, text highlights, and glowing effects.
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-## ⚠️ API Rate Limits
-
-Since this application uses the **public** GitHub API without authentication:
-
-- You are limited to **60 requests per hour**.
-- If you hit the limit, wait a few minutes or try again later.
-
----
-
-## 👨‍💻 Author
-
-**Designed & Developed by [Sarasitha Galagama](https://sarasitha.me/)**
-
-[![GitHub](https://img.shields.io/badge/GitHub-Sarasitha_Galagama-white?style=for-the-badge&logo=github&logoColor=black)](https://github.com/sarasithagalagama)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Sarasitha_Galagama-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/sarasitha-galagama/)
-[![Instagram](https://img.shields.io/badge/Instagram-@sarasitha__galagama-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/sarasitha_galagama/)
-[![Portfolio](https://img.shields.io/badge/Portfolio-sarasitha.me-38bdf8?style=for-the-badge&logo=google-earth&logoColor=white)](https://sarasitha.me/)
-
----
-
-<p align="center">© 2026 GitHype. All rights reserved.</p>
+Designed & Developed by **Sarasitha Galagama**
