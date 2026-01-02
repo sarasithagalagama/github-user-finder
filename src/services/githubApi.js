@@ -21,7 +21,21 @@ export const githubApi = {
     try {
       // Try direct username fetch
       const response = await fetch(`${BASE_URL}/users/${query}`);
-      return await this.handleResponse(response);
+      const userData = await this.handleResponse(response);
+
+      // Fetch social accounts
+      try {
+        const socialRes = await fetch(
+          `${BASE_URL}/users/${userData.login}/social_accounts`
+        );
+        const socials = await this.handleResponse(socialRes);
+        userData.social_accounts = socials;
+      } catch (socialErr) {
+        console.warn("Could not fetch social accounts", socialErr);
+        userData.social_accounts = [];
+      }
+
+      return userData;
     } catch (err) {
       console.log("Direct fetch failed, trying search...", err.message);
 
@@ -35,7 +49,21 @@ export const githubApi = {
         // Fetch full profile of best match
         const login = searchData.items[0].login;
         const profileRes = await fetch(`${BASE_URL}/users/${login}`);
-        return await this.handleResponse(profileRes);
+        let userData = await this.handleResponse(profileRes);
+
+        // Fetch social accounts for search result
+        try {
+          const socialRes = await fetch(
+            `${BASE_URL}/users/${login}/social_accounts`
+          );
+          const socials = await this.handleResponse(socialRes);
+          userData.social_accounts = socials;
+        } catch (socialErr) {
+          console.warn("Could not fetch social accounts", socialErr);
+          userData.social_accounts = [];
+        }
+
+        return userData;
       } else {
         throw new Error("User not found");
       }
