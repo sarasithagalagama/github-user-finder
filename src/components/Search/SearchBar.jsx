@@ -43,6 +43,14 @@ const SearchBar = () => {
     searchUser(login);
   };
 
+  const handleClear = () => {
+    setQuery("");
+    setShowSuggestions(false);
+    clearSearch();
+    // Optional: Keep focus on input
+    document.getElementById("search").focus();
+  };
+
   return (
     <div className="search-wrapper">
       <div className="search-box">
@@ -60,6 +68,15 @@ const SearchBar = () => {
           // Delay blur to allow clicking suggestions
           onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
         />
+        {query && (
+          <button
+            className="clear-btn"
+            onClick={handleClear}
+            aria-label="Clear search"
+          >
+            <i className="fas fa-times"></i>
+          </button>
+        )}
         <button id="search-btn" onClick={handleSearch}>
           Search
         </button>
