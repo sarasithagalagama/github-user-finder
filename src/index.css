@@ -643,6 +643,60 @@ button#search-btn:hover {
   }
 }
 
+@media (max-width: 600px) {
+  .app-layout {
+    padding: 1rem 1rem 0;
+  }
+
+  .logo {
+    font-size: 2rem;
+  }
+
+  .search-wrapper {
+    margin-bottom: 2rem;
+  }
+
+  .search-box {
+    padding: 0.25rem;
+  }
+
+  .search-icon {
+    padding-left: 1rem;
+  }
+
+  input#search {
+    padding: 0.8rem;
+    font-size: 1rem;
+  }
+
+  button#search-btn {
+    padding: 0.8rem 1.5rem;
+  }
+
+  .stat-item {
+    padding: 1rem;
+  }
+
+  .stat-value {
+    font-size: 1.8rem;
+  }
+  
+  .repos-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .classroom-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .nav-btn {
+    padding: 0.8rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
+
 /* Welcome State Styling */
 .welcome-state {
   text-align: center;
